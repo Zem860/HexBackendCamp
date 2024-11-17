@@ -131,5 +131,16 @@ DELETE FROM products WHERE name in ('兒童床架', '電競書桌')
 查詢是否刪除
 select * FROM products
 
+上一位學生的題目解答
+-- 我的題目 : 請列出庫存不滿保險庫存量(5)的商品名稱，
+-- 並列出 "商品目前庫存與保險庫存量的數量差"?
+
+查詢庫存量不滿保險庫存量5的商品
+
+select * FROM products WHERE stock < 5
+
+找出庫存數量差
+select *, 5-stock as "庫存數量差" FROM products WHERE stock < 5
+
 
 
