@@ -1,6 +1,0 @@
-小節作業1
--- 情境 1：單品查詢
--- 客人：「這張北歐風雙人沙發多少錢？」
--- 小美想查：想找到這張沙發的價格和庫存
-
-select name, price, stock FROM products WHERE name = '北歐風雙人沙發';
