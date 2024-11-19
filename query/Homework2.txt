@@ -127,3 +127,28 @@ WHERE students.id = 5;
 select students.id as "小孩編號", students.name as "姓名",
 parents.name as 父母名稱,parents.phone as "父母電話", parents.gender as "父母性別"
 FROM students INNER JOIN parents on students.parents =parents.id;
+
+//Extra
+
+select * FROM classrooms;
+
+UPDATE classrooms
+set name = '三年三班'
+WHERE id = 2;
+
+SELECT * FROM classrooms;
+
+
+
+//更新三班的導師
+
+//先查詢對應的資料
+select students.name as s, teachers.name as t, classrooms.name as c FROM students INNER JOIN teachers on  students.teacher_id = teachers.id INNER JOIN classrooms on students.classroom_id = classrooms.id;
+
+//更新
+UPDATE students 
+set teacher_id = 4
+WHERE classroom_id = 2;
+//更新之後的資料查詢
+select students.name as s, teachers.name as t, classrooms.name as c FROM students INNER JOIN teachers on  students.teacher_id = teachers.id INNER JOIN classrooms on students.classroom_id = classrooms.id
+
