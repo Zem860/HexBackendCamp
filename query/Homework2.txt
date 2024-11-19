@@ -1,0 +1,129 @@
+Homework2
+創建班級資料表
+
+CREATE table classrooms (
+	id serial PRIMARY key,
+   name varchar(20)
+)
+
+INSERT INTO classrooms (name) values 
+('三年一班'),
+('三年二班');
+
+
+//發現如果想使用enum要另外create -_-
+//創建主要資料表
+
+CREATE type gender as ENUM('男','女');
+
+CREATE table students (
+id serial PRIMARY key,
+  name varchar(50),
+  classroom_id integer,
+  gender gender,
+  age integer,
+	FOREIGN key (classroom_id) references classrooms(id)
+
+)
+
+//新增學生資料
+
+INSERT INTO students (name, classroom_id, gender, age) VALUES
+('小明', 1, '男', 8 ),
+('小華',2, '女', 9),
+('小美', 1, '女',8),
+('小強', 1, '女',8),
+('小智',2, '男',9)
+
+//查詢資料
+select students.id as "學生編號", students.name as "姓名", classrooms.name as "班級",
+students.gender as "性別", students.age as "年齡"
+FROM students
+INNER JOIN classrooms on students.classroom_id = classrooms.id
+
+--------------------------------------------------------------------------------------------------------------------
+第二題
+//創建老師資料表
+
+CREATE table teachers (
+  id serial PRIMARY key, 
+name varchar(50)
+ 
+)
+
+INSERT INTO teachers (name) VALUES ('廖洧杰'), ('卡斯柏'), ('查理'),('麥可'),('李燕容')
+
+//改變學生表格
+
+ALTER table students ADD column teacher_id integer;
+//增加屬性
+ALTER table students ADD constraint fk_teacher FOREIGN key (teacher_id) REFERENCES teachers (id);
+
+//將欄位暫時和老師連結
+
+UPDATE students
+SET teacher_id = teachers.id
+FROM teachers
+WHERE students.id = teachers.id;
+
+//觀看結果是否正確
+SELECT * FROM students
+
+//產生老有老師的表格
+select students.id as "學生編號", students.name as "姓名", classrooms.name as "班級",
+
+teachers.name as "班級老師", students.gender as "性別", students.age as "年齡"
+FROM students INNER JOIN classrooms on students.classroom_id = classrooms.id 
+INNER JOIN teachers on students.teacher_id = teachers.id;
+----------------------------------------------------------------------
+//創建父母資料表
+CREATE table parents (
+id serial PRIMARY key,
+name varchar(50),
+  phone varchar(15),
+  gender gender
+
+)
+
+//插入父母資料
+INSERT INTO parents (name, phone, gender) VALUES
+('王大祥', '0973254254','男'),
+('王曉如', '0955717855', '女')
+
+//在學生資料表新增欄位
+ALTER table students ADD column parents integer;
+ALTER table students ADD CONSTRAINT fk_parents FOREIGN key (parents) REFERENCES parents(id);
+
+
+//更新學生的父母欄位
+UPDATE students
+set parents = 1
+FROM parents
+WHERE students.id = 1;
+
+UPDATE students
+set parents = 2
+FROM parents
+WHERE students.id = 2;
+UPDATE students
+
+set parents = 1
+FROM parents
+WHERE students.id = 3;
+
+UPDATE students
+set parents = 2
+FROM parents
+WHERE students.id = 4;
+
+UPDATE students
+set parents = 1
+FROM parents
+WHERE students.id = 5;
+
+//查詢資料表
+
+
+select students.id as "小孩編號", students.name as "姓名",
+parents.name as 父母名稱,parents.phone as "父母電話", parents.gender as "父母性別"
+FROM students INNER JOIN parents on students.parents =parents.id;
